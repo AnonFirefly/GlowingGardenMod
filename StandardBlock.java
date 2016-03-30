@@ -7,10 +7,10 @@ import net.minecraft.util.EnumWorldBlockLayer;
 
 public class StandardBlock extends Block {
 		public boolean isOpaque;
-		public String BlockLayer;
+		public EnumWorldBlockLayer BlockLayer;
 		
 		 StandardBlock(String unlocalizedName, Material material, float hardness, float resistance, boolean opacity, String tool,
-				 int level, String Blayer){
+				 int level, EnumWorldBlockLayer Blayer){
 		  super(material);
 		  this.setUnlocalizedName(unlocalizedName);
 		  this.setCreativeTab(CreativeTabs.tabBlock);
@@ -21,7 +21,7 @@ public class StandardBlock extends Block {
 		  this.BlockLayer = Blayer; //Options are SOLID, CUTOUT_MIPPED, CUTOUT, or TRANSLUCENT//
 		  }
 		  public EnumWorldBlockLayer getBlockLayer(){
-			  return EnumWorldBlockLayer.valueOf(this.BlockLayer);
+			  return EnumWorldBlockLayer(this.BlockLayer);
 		  }
 		 public boolean isOpaqueCube(){
 			 return isOpaque;
