@@ -1,0 +1,47 @@
+package com.anonfirefly.glowinggarden.blocks;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class StandardGlassBlock extends StandardBlock{
+	private boolean ignoreSimilarity;
+	@Override public EnumWorldBlockLayer getBlockLayer(){
+		return EnumWorldBlockLayer.CUTOUT;
+	}
+	@Override @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
+    {
+        IBlockState iblockstate = worldIn.getBlockState(pos);
+        Block block = iblockstate.getBlock();
+
+        if (this == Blocks.glass || block instanceof StandardGlassBlock|| this == Blocks.stained_glass)
+        {
+            if (worldIn.getBlockState(pos.offset(side.getOpposite())) != iblockstate)
+            {
+                return true;
+            }
+
+            if (block == this)
+            {
+                return false;
+            }
+        }
+
+        return !this.ignoreSimilarity && block == this ? false : super.shouldSideBeRendered(worldIn, pos, side);
+    }
+	
+	StandardGlassBlock(String unlocalizedName, Material material, float hardness, float resistance, boolean opacity,
+			String tool, int level) {
+		super(unlocalizedName, material, hardness, resistance, opacity, tool, level); // TODO Auto-generated constructor stub
+		
+	}
+
+}
